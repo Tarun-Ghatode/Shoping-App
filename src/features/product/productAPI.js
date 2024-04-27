@@ -8,6 +8,16 @@ export function fetchAllProducts() {
   );
 }
 
+export function fetchProductById(id){
+  return new Promise(async (resolve) =>{
+    const response = await fetch('http://localhost:8080/products/' + id)
+    const data = await response.json();
+    console.log("response", response);    
+    resolve({data})
+  }  
+  );
+}
+
 export function fetchProductsByFilters(filter,sort, pagination) {
   // filter = {"category": ["smartphone", "laptops"]}
   // sort = {_sort: "price"}
@@ -32,7 +42,7 @@ export function fetchProductsByFilters(filter,sort, pagination) {
   return new Promise(async (resolve) =>{
     const response = await fetch('http://localhost:8080/products?'+queryString);
     let data = await response.json();
-    console.log("🚀 ~ returnnewPromise ~ dḁta:", data)
+    // console.log("🚀 ~ returnnewPromise ~ data:", data)
 
     const totalItems = await response.headers.get('X-Total-Count') || data.items
     // Tarun did : based on response from api changed the referenced to data 
